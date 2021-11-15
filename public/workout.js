@@ -21,11 +21,11 @@ async function initWorkout() {
 
 function tallyExercises(exercises) {
   const tallied = exercises.reduce((acc, curr) => {
-    if (curr.type === "resistance") {
+    if (curr.category === "resistance") {
       acc.totalWeight = (acc.totalWeight || 0) + curr.weight;
       acc.totalSets = (acc.totalSets || 0) + curr.sets;
       acc.totalReps = (acc.totalReps || 0) + curr.reps;
-    } else if (curr.type === "cardio") {
+    } else if (curr.category === "cardio") {
       acc.totalDistance = (acc.totalDistance || 0) + curr.distance;
     }
     return acc;
