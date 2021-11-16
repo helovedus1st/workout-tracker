@@ -36,4 +36,34 @@ router.put('/workouts/:id', (req, res) => {
     });
 });
 
+router.get('/workouts/range', (req, res) => {
+  Workout.aggregate(
+    [
+      {
+        // $addfields - need total duration
+        $addFields: {
+          totalDuration: {
+            $sum: '$exercises.duration'
+          }
+        }
+      },
+      {
+        $sort: {
+          day: -1
+        }
+      },
+      {
+        $limit: 7
+      }
+    ]
+  )
+  // .sort it limit it and send data back as json
+  .then((dbWorkouts) => {
+    res.json(dbWorkouts)
+  })
+  .catch((err) => {
+    res.status(400).json(err);
+})});
+
+
 module.exports = router;
